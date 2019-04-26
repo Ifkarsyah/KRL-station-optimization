@@ -1,5 +1,6 @@
 from datetime import time, datetime
 from operator import attrgetter
+import csv
 
 
 class KRL:
@@ -33,11 +34,12 @@ def s2tm(s):
 
 
 KRLs = []
-KRLs.append(KRL(s2tm('10:10'), s2tm('10:30'), 1))
-KRLs.append(KRL(s2tm('10:10'), s2tm('10:30'), 1))
-KRLs.append(KRL(s2tm('10:00'), s2tm('10:20'), 2))
-KRLs.append(KRL(s2tm('10:30'), s2tm('12:30'), 2))
-KRLs.append(KRL(s2tm('12:10'), s2tm('12:30'), 3))
-KRLs.append(KRL(s2tm('09:00'), s2tm('10:05'), 1))
+with open('src/data.csv', 'r') as file:
+    reader = csv.reader(file)
+    for row in reader:
+        KRLs.append(KRL(s2tm(row[0]),
+                        s2tm(row[1]),
+                        int(row[2])))
 
-print('Maksimum berhenti: ' + str(max_KRL_in_station(KRLs, 6)))
+
+print('Maksimum berhenti: ' + str(max_KRL_in_station(KRLs, 7)))
